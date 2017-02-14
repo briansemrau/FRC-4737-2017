@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.lib.FasterIterativeRobot;
+import org.usfirst.frc.team4737.robot.commands.MakePushableRobot;
 import org.usfirst.frc.team4737.robot.subsystems.*;
 
 /**
@@ -60,6 +61,7 @@ public class Robot extends FasterIterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
+        new MakePushableRobot().start();
     }
 
     public void disabledPeriodic() {

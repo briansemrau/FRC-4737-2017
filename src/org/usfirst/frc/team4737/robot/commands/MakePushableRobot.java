@@ -5,17 +5,17 @@ import org.usfirst.frc.team4737.robot.Robot;
 
 /**
  * @author brian
- * @version Feb. 13, 2017
+ * @version Feb. 14, 2017
  */
-public class ActivateJetson extends Command {
+public class MakePushableRobot extends Command {
 
-    public ActivateJetson() {
-        requires(Robot.JETSON_TX1);
+    public MakePushableRobot() {
+        requires(Robot.DRIVE);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.JETSON_TX1.setPowerSwitch(true);
+        Robot.DRIVE.setBrakeMode(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -24,12 +24,12 @@ public class ActivateJetson extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return timeSinceInitialized() > 0.350;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.JETSON_TX1.setPowerSwitch(false);
+        Robot.DRIVE.setBrakeMode(true);
     }
 
     // Called when another command which requires one or more of the same

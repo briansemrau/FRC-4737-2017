@@ -58,6 +58,13 @@ public class Drive extends Subsystem {
         dumbDrive.arcadeDrive(moveValue, rotateValue, squaredInputs);
     }
 
+    public void setBrakeMode(boolean brake) {
+        leftFront.enableBrakeMode(brake);
+        leftRear.enableBrakeMode(brake);
+        rightFront.enableBrakeMode(brake);
+        rightRear.enableBrakeMode(brake);
+    }
+
     public void initDefaultCommand() {
         setDefaultCommand(new TeleopDrive());
     }
