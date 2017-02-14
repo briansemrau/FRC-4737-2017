@@ -1,18 +1,16 @@
-
 package org.usfirst.frc.team4737.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
- *
+ * @author brian
+ * @version Feb. 13, 2017
  */
-public class ExampleCommand extends Command {
+public class StopAgitator extends Command {
 
-    public ExampleCommand() {
-        // Use requires() here to declare subsystem dependencies
-        requires(Robot.exampleSubsystem);
+    public StopAgitator() {
+        requires(Robot.AGITATOR);
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +19,7 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        Robot.AGITATOR.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()

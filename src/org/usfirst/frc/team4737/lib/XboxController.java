@@ -13,18 +13,16 @@ public class XboxController {
         private final Joystick controller;
         private final int axis;
 
-        private double lowDeadzone;
-        private double highDeadzone;
+        private double deadzone;
 
         public Axis(Joystick controller, int axis) {
             this.controller = controller;
             this.axis = axis;
         }
 
-        public void setDeadzone(double low, double high) {
-            if (low > high) throw new IllegalArgumentException("Low deadzone must be greater than the high deadzone.");
-            this.lowDeadzone = low;
-            this.highDeadzone = high;
+        public void setDeadzone(double radius) {
+            if (radius < 0) throw new IllegalArgumentException("Deadzone cannot be less than 0.");
+            this.deadzone = radius;
         }
 
         public double getRaw() {
@@ -33,7 +31,18 @@ public class XboxController {
 
         public double get() {
             double raw = getRaw();
-            return raw < lowDeadzone ? raw : raw > highDeadzone ? raw : 0;
+            if (raw < -deadzone) {
+                return scale(raw, -1, -deadzone, -1, 0);
+            } else if (raw > deadzone) {
+                return scale(raw, deadzone, 1, 0, 1);
+            } else {
+                return 0;
+            }
+        }
+
+        private double scale(double val, double valLow, double valHigh, double newLow, double newHigh) {
+            double reduced = (val - valLow) / (valHigh - valLow);
+            return reduced * (newHigh - newLow) + newLow;
         }
     }
 

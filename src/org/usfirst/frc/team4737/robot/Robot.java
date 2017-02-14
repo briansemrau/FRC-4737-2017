@@ -1,14 +1,11 @@
 
 package org.usfirst.frc.team4737.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team4737.robot.commands.ExampleCommand;
-import org.usfirst.frc.team4737.robot.subsystems.ExampleSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team4737.lib.FasterIterativeRobot;
+import org.usfirst.frc.team4737.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,26 +14,44 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-public class Robot extends IterativeRobot {
+public class Robot extends FasterIterativeRobot {
 
-    public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-    public static OI oi;
+    public static OI OI;
 
-    Command autonomousCommand;
-    SendableChooser chooser;
+    public static final Drive DRIVE = new Drive();
+    public static final Intake INTAKE = new Intake();
+    public static final Agitator AGITATOR = new Agitator();
+    public static final Shooter SHOOTER_L = new Shooter(Shooter.Side.LEFT);
+    public static final Shooter SHOOTER_R = new Shooter(Shooter.Side.RIGHT);
+//    public static final Climber CLIMBER = new Climber();
+
+    public static final JetsonTX1 JETSON_TX1 = new JetsonTX1();
+
+//    Command autonomousCommand;
+//    SendableChooser chooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
-        // TODO make robot able to create inspiring, wholesome memes
+        OI = new OI();
 
-        oi = new OI();
-        chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
+//        chooser = new SendableChooser();
+//        chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+//        SmartDashboard.putData("Auto mode", chooser);
+    }
+
+    @Override
+    public void robotPeriodic() {
+        Robot.SHOOTER_L.getSmartDashboardPIDFvals();
+        SmartDashboard.putString("shooterTalon", "" +
+                SHOOTER_L.getTarget() + ":" +
+                SHOOTER_L.getSpeed() + ":" +
+                SHOOTER_L.getClosedLoopError() + ":" +
+                SHOOTER_L.getVPercent()
+        );
     }
 
     /**
@@ -45,7 +60,6 @@ public class Robot extends IterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
-
     }
 
     public void disabledPeriodic() {
@@ -54,29 +68,16 @@ public class Robot extends IterativeRobot {
 
     /**
      * This autonomous (along with the chooser code above) shows how to select between different autonomous modes using
-     * the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW Dashboard,
-     * remove all of the chooser code and uncomment the getString code to get the auto name from the text box below the
-     * Gyro
+     * the dashboard. The sendable chooser code works with the Java SmartDashboard.
      * <p>
      * You can add additional auto modes by adding additional commands to the chooser code above (like the commented
      * example) or additional comparisons to the switch structure below with additional strings & commands.
      */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-        switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
+//        autonomousCommand = (Command) chooser.getSelected();
 
         // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+//        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**
@@ -91,7 +92,8 @@ public class Robot extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
+
+//        if (autonomousCommand != null) autonomousCommand.cancel();
     }
 
     /**

@@ -44,5 +44,7 @@
     </orderEntry>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="library" name="navx_frc" level="project" />
+    <orderEntry type="library" name="cscore" level="project" />
+    <orderEntry type="library" name="CTRLib" level="project" />
   </component>
 </module>
