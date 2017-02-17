@@ -32,10 +32,12 @@ public class RobotMap {
     // Speed/Tuning Values
     // ###################
 
-    public static final double SHOOTING_SPEED = 800; // TODO find value
-    public static final double INTAKE_VOLTAGE = 12; // TODO figure out what speed
+    public static final double SHOOTING_SPEED = 3000 /*RPM*/ * 1024 /*Encoder ticks per rev*/; // TODO find value
+    public static final double SHOOTING_SPEED_TOLERANCE = 150;
+    public static final double INTAKE_VOLTAGE = 10; // TODO figure out what speed
     public static final double AGITATOR_FEED_SPEED = 1;
     public static final double AGITATOR_RUSTLE_SPEED = 0.5;
+    public static final double FEEDER_FEED_VOLTAGE = 12;
 
     // ############################
     // Talon IDs and polarities, IO

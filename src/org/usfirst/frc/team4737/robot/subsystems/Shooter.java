@@ -19,6 +19,8 @@ public class Shooter extends Subsystem {
         public final int flywheelID;
         public final int feederID;
         public final boolean reverse;
+        public Shooter shooter;
+        public Feeder feeder;
 
         Side(int flywheelID, int feederID, boolean reverse) {
             this.flywheelID = flywheelID;
@@ -28,27 +30,21 @@ public class Shooter extends Subsystem {
     }
 
     private CANTalon flywheelTalon;
-    private CANTalon feederTalon;
 
     public Shooter(Side side) {
         super("Shooter" + (side.reverse ? "L" : "R"));
+        side.shooter = this;
 
-        // Init flywheel talon
         flywheelTalon = new CANTalon(side.flywheelID);
 
         flywheelTalon.enableBrakeMode(false);
-
-        flywheelTalon.reverseOutput(false); // TODO reverse needs to affect this
+        flywheelTalon.reverseOutput(side.reverse);
 
         flywheelTalon.setStatusFrameRateMs(CANTalon.StatusFrameRate.QuadEncoder, 10);
-        flywheelTalon.configEncoderCodesPerRev(1024);
+        flywheelTalon.configEncoderCodesPerRev(1); // It's actually 1024, but we're dealing with encoder units universally
         flywheelTalon.reverseSensor(false); // TODO reverse might need to affect this
 
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-
-        // Init feeder talon
-        feederTalon = new CANTalon(side.feederID);
-        feederTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
     }
 
     // #######
@@ -73,18 +69,17 @@ public class Shooter extends Subsystem {
         flywheelTalon.set(speed);
     }
 
-    public void setFeedVoltage(double voltage) {
-        feederTalon.set(voltage);
-    }
-
     public void stop() {
         setShooterVoltage(0);
-
     }
 
     // #######
     // Getters
     // #######
+
+    public boolean readyToShoot() {
+        return Math.abs(getClosedLoopError()) < RobotMap.SHOOTING_SPEED_TOLERANCE;
+    }
 
     public double getSpeed() {
         return flywheelTalon.getSpeed();
@@ -96,10 +91,6 @@ public class Shooter extends Subsystem {
 
     public double getClosedLoopError() {
         return flywheelTalon.getClosedLoopError();
-    }
-
-    public double getVPercent() {
-        return flywheelTalon.getOutputVoltage() / flywheelTalon.getBusVoltage();
     }
 
     public void initDefaultCommand() {

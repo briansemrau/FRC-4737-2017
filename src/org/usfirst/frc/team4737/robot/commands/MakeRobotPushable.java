@@ -1,31 +1,25 @@
 package org.usfirst.frc.team4737.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team4737.robot.*;
-import org.usfirst.frc.team4737.robot.subsystems.Shooter;
+import org.usfirst.frc.team4737.robot.Robot;
 
 /**
  * @author brian
- * @version Feb. 11, 2017
+ * @version Feb. 14, 2017
  */
-public class RunShooter extends Command {
+public class MakeRobotPushable extends Command {
 
-    private Shooter shooter;
-
-    public RunShooter(Shooter shooter) {
-        requires(shooter);
-        this.shooter = shooter;
+    public MakeRobotPushable() {
+        requires(Robot.DRIVE);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        Robot.DRIVE.setBrakeMode(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        shooter.setShooterTargetSpeed(RobotMap.SHOOTING_SPEED);
-        shooter.setShooterTargetSpeed(SmartDashboard.getNumber("shooterSpeed", RobotMap.SHOOTING_SPEED) * 1024);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,11 +29,13 @@ public class RunShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.DRIVE.setBrakeMode(true);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        end();
     }
 
 }

@@ -19,6 +19,8 @@ public class Agitator extends Subsystem {
         rightTalon = new CANTalon(RobotMap.AGITATOR_R_TALON);
         leftTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
         rightTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+        leftTalon.setInverted(true);
+        rightTalon.setInverted(true);
     }
 
     public void stop() {

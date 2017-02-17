@@ -1,11 +1,12 @@
 
 package org.usfirst.frc.team4737.robot;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.usfirst.frc.team4737.lib.FasterIterativeRobot;
-import org.usfirst.frc.team4737.robot.commands.MakePushableRobot;
+import org.usfirst.frc.team4737.robot.commands.MakeRobotPushable;
 import org.usfirst.frc.team4737.robot.subsystems.*;
 
 /**
@@ -24,12 +25,19 @@ public class Robot extends FasterIterativeRobot {
     public static final Agitator AGITATOR = new Agitator();
     public static final Shooter SHOOTER_L = new Shooter(Shooter.Side.LEFT);
     public static final Shooter SHOOTER_R = new Shooter(Shooter.Side.RIGHT);
-//    public static final Climber CLIMBER = new Climber();
+    public static final Feeder FEEDER_L = new Feeder(Shooter.Side.LEFT);
+    public static final Feeder FEEDER_R = new Feeder(Shooter.Side.RIGHT);
+    public static final Climber CLIMBER = new Climber();
 
     public static final JetsonTX1 JETSON_TX1 = new JetsonTX1();
 
+    public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
+
 //    Command autonomousCommand;
 //    SendableChooser chooser;
+
+    private SendableChooser<Shooter> shooterTuningChooser;
+    private Shooter selectedShooter = SHOOTER_L;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -42,17 +50,33 @@ public class Robot extends FasterIterativeRobot {
 //        chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
 //        SmartDashboard.putData("Auto mode", chooser);
+
+        shooterTuningChooser = new SendableChooser<>();
+        shooterTuningChooser.addDefault("Left Shooter", SHOOTER_L);
+        shooterTuningChooser.addObject("Right Shooter", SHOOTER_R);
+        SmartDashboard.putData("ShooterChooser", shooterTuningChooser);
     }
 
     @Override
     public void robotPeriodic() {
-        Robot.SHOOTER_L.getSmartDashboardPIDFvals();
+        selectedShooter = shooterTuningChooser.getSelected();
+
+        selectedShooter.getSmartDashboardPIDFvals();
         SmartDashboard.putString("shooterTalon", "" +
-                SHOOTER_L.getTarget() + ":" +
-                SHOOTER_L.getSpeed() + ":" +
-                SHOOTER_L.getClosedLoopError() + ":" +
-                SHOOTER_L.getVPercent()
+                selectedShooter.getTarget() + ":" +
+                selectedShooter.getSpeed() + ":" +
+                selectedShooter.getClosedLoopError()
         );
+
+        StringBuilder sb = new StringBuilder(100);
+        for (int channel = 0; channel < 16; channel++) {
+            if (channel >= 6 && channel <= 9) continue;
+
+            sb.append(PDP.getCurrent(channel));
+            if (channel < 15)
+                sb.append(":");
+        }
+        SmartDashboard.putString("currents", sb.toString());
     }
 
     /**
@@ -61,7 +85,7 @@ public class Robot extends FasterIterativeRobot {
      * the robot is disabled.
      */
     public void disabledInit() {
-        new MakePushableRobot().start();
+        new MakeRobotPushable().start();
     }
 
     public void disabledPeriodic() {
@@ -96,6 +120,8 @@ public class Robot extends FasterIterativeRobot {
         // this line or comment it out.
 
 //        if (autonomousCommand != null) autonomousCommand.cancel();
+
+        SmartDashboard.putString("currents", "0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15");
     }
 
     /**

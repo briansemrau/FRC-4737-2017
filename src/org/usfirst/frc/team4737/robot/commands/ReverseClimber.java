@@ -1,21 +1,17 @@
 package org.usfirst.frc.team4737.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team4737.robot.*;
-import org.usfirst.frc.team4737.robot.subsystems.Shooter;
+import org.usfirst.frc.team4737.robot.Robot;
 
 /**
  * @author brian
- * @version Feb. 11, 2017
+ * @version Feb. 17, 2017
  */
-public class RunShooter extends Command {
+public class ReverseClimber extends Command {
 
-    private Shooter shooter;
-
-    public RunShooter(Shooter shooter) {
-        requires(shooter);
-        this.shooter = shooter;
+    public ReverseClimber() {
+        super(0.5);
+        requires(Robot.CLIMBER);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +20,7 @@ public class RunShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        shooter.setShooterTargetSpeed(RobotMap.SHOOTING_SPEED);
-        shooter.setShooterTargetSpeed(SmartDashboard.getNumber("shooterSpeed", RobotMap.SHOOTING_SPEED) * 1024);
+        Robot.CLIMBER.setSpeed(-0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

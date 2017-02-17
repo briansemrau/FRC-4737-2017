@@ -1,21 +1,16 @@
 package org.usfirst.frc.team4737.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.robot.*;
-import org.usfirst.frc.team4737.robot.subsystems.Shooter;
 
 /**
  * @author brian
- * @version Feb. 11, 2017
+ * @version Feb. 15, 2017
  */
-public class RunShooter extends Command {
+public class RunAgitator extends Command {
 
-    private Shooter shooter;
-
-    public RunShooter(Shooter shooter) {
-        requires(shooter);
-        this.shooter = shooter;
+    public RunAgitator() {
+        requires(Robot.AGITATOR);
     }
 
     // Called just before this Command runs the first time
@@ -24,8 +19,7 @@ public class RunShooter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        shooter.setShooterTargetSpeed(RobotMap.SHOOTING_SPEED);
-        shooter.setShooterTargetSpeed(SmartDashboard.getNumber("shooterSpeed", RobotMap.SHOOTING_SPEED) * 1024);
+        Robot.AGITATOR.setSpeeds(RobotMap.AGITATOR_FEED_SPEED, RobotMap.AGITATOR_FEED_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

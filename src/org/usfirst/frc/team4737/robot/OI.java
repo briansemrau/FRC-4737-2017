@@ -1,7 +1,10 @@
 package org.usfirst.frc.team4737.robot;
 
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.lib.XboxController;
 import org.usfirst.frc.team4737.robot.commands.*;
+import org.usfirst.frc.team4737.robot.commands.group.DoubleShoot;
 import org.usfirst.frc.team4737.robot.subsystems.RunIntake;
 import org.usfirst.frc.team4737.robot.triggers.JoystickAxisTrigger;
 
@@ -12,17 +15,29 @@ import org.usfirst.frc.team4737.robot.triggers.JoystickAxisTrigger;
 public class OI {
 
     public final XboxController controller;
-    private final JoystickAxisTrigger drivingTrigger;
 
     public OI() {
         controller = new XboxController(0);
-        drivingTrigger = new JoystickAxisTrigger(controller.LS.X, controller.RT, controller.LT);
+        JoystickAxisTrigger drivingTrigger = new JoystickAxisTrigger(controller.LS.X, controller.RT, controller.LT);
 
-        controller.X.whenPressed(new RunShooter(Robot.SHOOTER_L));
-        controller.X.whenReleased(new StopShooter(Robot.SHOOTER_L));
+        SmartDashboard.putData(new ReverseClimber());
 
-        controller.RB.whenPressed(new RunIntake());
-        controller.RB.whenReleased(new StopIntake());
+        controller.RB.whileActive(new RunShooter(Robot.SHOOTER_L));
+        controller.RB.whileActive(new RunShooter(Robot.SHOOTER_R));
+
+        controller.X.whenPressed(new RunIntake());
+        controller.X.whenReleased(new StopIntake());
+
+        controller.B.whenPressed(new RunFeeder(Robot.FEEDER_L));
+        controller.B.whenPressed(new RunFeeder(Robot.FEEDER_R));
+        controller.B.whenPressed(new RunAgitator());
+
+        controller.B.whenReleased(new StopFeeder(Robot.FEEDER_L));
+        controller.B.whenReleased(new StopFeeder(Robot.FEEDER_R));
+        controller.B.whenReleased(new StopAgitator());
+
+        controller.Y.whenPressed(new ClimberFullspeed());
+        controller.Y.whenReleased(new StopClimber());
 
         drivingTrigger.whenActive(new TeleopDrive());
     }
