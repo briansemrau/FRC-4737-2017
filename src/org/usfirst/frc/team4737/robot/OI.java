@@ -2,11 +2,13 @@ package org.usfirst.frc.team4737.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.lib.XboxController;
-import org.usfirst.frc.team4737.robot.commands.*;
+import org.usfirst.frc.team4737.robot.commands.agitator.*;
+import org.usfirst.frc.team4737.robot.commands.climber.*;
 import org.usfirst.frc.team4737.robot.commands.drive.TeleopDrive;
+import org.usfirst.frc.team4737.robot.commands.feeder.*;
 import org.usfirst.frc.team4737.robot.commands.group.SingleShoot;
-import org.usfirst.frc.team4737.robot.commands.tuning.BinarySearchFFTuner;
-import org.usfirst.frc.team4737.robot.subsystems.*;
+import org.usfirst.frc.team4737.robot.commands.intake.*;
+import org.usfirst.frc.team4737.robot.commands.shooter.*;
 import org.usfirst.frc.team4737.robot.triggers.JoystickAxisTrigger;
 
 /**
@@ -29,8 +31,8 @@ public class OI {
         controller.LB.whileActive(new RunShooter(Robot.SHOOTER_L));
         controller.RB.whileActive(new RunShooter(Robot.SHOOTER_R));
 
-        controller.START.whileActive(new SingleShoot(Shooter.Side.RIGHT));
-        controller.SELECT.whileActive(new SingleShoot(Shooter.Side.LEFT));
+        controller.START.whileActive(new SingleShoot(Robot.Side.RIGHT));
+        controller.SELECT.whileActive(new SingleShoot(Robot.Side.LEFT));
 
         // Intake
         controller.X.whenPressed(new RunIntake());
@@ -39,14 +41,16 @@ public class OI {
         // Feeders and Agitator
         controller.B.whenPressed(new RunFeeder(Robot.FEEDER_L));
         controller.B.whenPressed(new RunFeeder(Robot.FEEDER_R));
-        controller.B.whenPressed(new RunAgitator());
+        controller.B.whenPressed(new RunAgitator(Robot.AGITATOR_L));
+        controller.B.whenPressed(new RunAgitator(Robot.AGITATOR_R));
 
         controller.B.whenReleased(new StopFeeder(Robot.FEEDER_L));
         controller.B.whenReleased(new StopFeeder(Robot.FEEDER_R));
-        controller.B.whenReleased(new StopAgitator());
+        controller.B.whenReleased(new StopAgitator(Robot.AGITATOR_L));
+        controller.B.whenReleased(new StopAgitator(Robot.AGITATOR_R));
 
         // Climber
-        controller.Y.whenPressed(new ClimberFullspeed());
+        controller.Y.whenPressed(new RunClimberFullspeed());
         controller.Y.whenReleased(new StopClimber());
 
         // Drive

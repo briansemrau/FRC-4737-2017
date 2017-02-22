@@ -1,8 +1,10 @@
 package org.usfirst.frc.team4737.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team4737.robot.Robot;
 
 /**
+ * @author Brian Semrau
  * @version Feb. 15, 2017
  */
 public class RunClimberFullspeed extends Command {

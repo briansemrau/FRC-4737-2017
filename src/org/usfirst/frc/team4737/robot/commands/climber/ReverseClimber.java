@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
+ * @author Brian Semrau
  * @version Feb. 17, 2017
  */
 public class ReverseClimber extends Command {
