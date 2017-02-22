@@ -77,7 +77,7 @@ public class FasterIterativeRobot extends RobotBase {
         	
         	double currentTime = Timer.getFPGATimestamp();
         	double delta = currentTime - lastTime;
-        	if (delta < 0.02) continue;
+        	if (delta < 0.005) continue;
         	lastTime = currentTime;
         	
             // Call the appropriate function depending upon the current robot mode

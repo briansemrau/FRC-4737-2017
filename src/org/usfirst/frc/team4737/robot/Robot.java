@@ -1,12 +1,13 @@
 
 package org.usfirst.frc.team4737.robot;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.usfirst.frc.team4737.lib.FasterIterativeRobot;
-import org.usfirst.frc.team4737.robot.commands.MakeRobotPushable;
+import org.usfirst.frc.team4737.robot.commands.ActivateJetson;
+import org.usfirst.frc.team4737.robot.commands.drive.MakeRobotPushable;
 import org.usfirst.frc.team4737.robot.subsystems.*;
 
 /**
@@ -36,9 +37,6 @@ public class Robot extends FasterIterativeRobot {
 //    Command autonomousCommand;
 //    SendableChooser chooser;
 
-    private SendableChooser<Shooter> shooterTuningChooser;
-    private Shooter selectedShooter = SHOOTER_L;
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -46,37 +44,63 @@ public class Robot extends FasterIterativeRobot {
     public void robotInit() {
         OI = new OI();
 
+        Scheduler.getInstance().add(new ActivateJetson());
+
 //        chooser = new SendableChooser();
 //        chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
 //        SmartDashboard.putData("Auto mode", chooser);
-
-        shooterTuningChooser = new SendableChooser<>();
-        shooterTuningChooser.addDefault("Left Shooter", SHOOTER_L);
-        shooterTuningChooser.addObject("Right Shooter", SHOOTER_R);
-        SmartDashboard.putData("ShooterChooser", shooterTuningChooser);
     }
+
+    private double lastSecond = Timer.getFPGATimestamp();
+    private int count = 0;
 
     @Override
     public void robotPeriodic() {
-        selectedShooter = shooterTuningChooser.getSelected();
-
-        selectedShooter.getSmartDashboardPIDFvals();
-        SmartDashboard.putString("shooterTalon", "" +
-                selectedShooter.getTarget() + ":" +
-                selectedShooter.getSpeed() + ":" +
-                selectedShooter.getClosedLoopError()
-        );
-
-        StringBuilder sb = new StringBuilder(100);
-        for (int channel = 0; channel < 16; channel++) {
-            if (channel >= 6 && channel <= 9) continue;
-
-            sb.append(PDP.getCurrent(channel));
-            if (channel < 15)
-                sb.append(":");
+        count++;
+        double currentTime = Timer.getFPGATimestamp();
+        if (currentTime - lastSecond > 1) {
+            SmartDashboard.putNumber("UPS", count);
+            count = 0;
+            lastSecond = currentTime;
         }
-        SmartDashboard.putString("currents", sb.toString());
+
+//        selectedShooter = shooterTuningChooser.getSelected();
+
+        SHOOTER_L.getSmartDashboardPIDFvals();
+//        SmartDashboard.putString("shooterLClosedLoopError", "" +
+//                SHOOTER_L.getClosedLoopError()
+//        );
+//        SmartDashboard.putString("shooterLTargetVSSpeed", "" +
+//                SHOOTER_L.getTarget() + ":" +
+//                SHOOTER_L.getSpeed()
+//        );
+        SmartDashboard.putNumber("shooterLClosedLoopError", SHOOTER_L.getClosedLoopError());
+        SmartDashboard.putNumber("shooterLVoltage", SHOOTER_L.getVoltageOutput());
+
+        SHOOTER_R.getSmartDashboardPIDFvals();
+//        SmartDashboard.putString("shooterRClosedLoopError", "" +
+//                SHOOTER_R.getClosedLoopError()
+//        );
+//        SmartDashboard.putString("shooterRTargetVSSpeed", "" +
+//                SHOOTER_R.getTarget() + ":" +
+//                SHOOTER_R.getSpeed()
+//        );
+        SmartDashboard.putNumber("shooterRClosedLoopError", SHOOTER_R.getClosedLoopError());
+        SmartDashboard.putNumber("shooterRVoltage", SHOOTER_R.getVoltageOutput());
+
+        SmartDashboard.putBoolean("shooterLOnTarget", SHOOTER_L.readyToShoot());
+        SmartDashboard.putBoolean("shooterROnTarget", SHOOTER_R.readyToShoot());
+
+//        StringBuilder sb = new StringBuilder(100);
+//        for (int channel = 0; channel < 16; channel++) {
+//            if (channel >= 6 && channel <= 9) continue;
+//
+//            sb.append(PDP.getCurrent(channel));
+//            if (channel < 15)
+//                sb.append(":");
+//        }
+//        SmartDashboard.putString("currents", sb.toString());
     }
 
     /**
@@ -121,7 +145,7 @@ public class Robot extends FasterIterativeRobot {
 
 //        if (autonomousCommand != null) autonomousCommand.cancel();
 
-        SmartDashboard.putString("currents", "0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15");
+//        SmartDashboard.putString("currents", "0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15");
     }
 
     /**

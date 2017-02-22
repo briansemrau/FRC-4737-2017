@@ -32,7 +32,7 @@ public class Shooter extends Subsystem {
     private CANTalon flywheelTalon;
 
     public Shooter(Side side) {
-        super("Shooter" + (side.reverse ? "L" : "R"));
+        super("Shooter" + (side.reverse ? "R" : "L"));
         side.shooter = this;
 
         flywheelTalon = new CANTalon(side.flywheelID);
@@ -42,9 +42,14 @@ public class Shooter extends Subsystem {
 
         flywheelTalon.setStatusFrameRateMs(CANTalon.StatusFrameRate.QuadEncoder, 10);
         flywheelTalon.configEncoderCodesPerRev(1); // It's actually 1024, but we're dealing with encoder units universally
-        flywheelTalon.reverseSensor(false); // TODO reverse might need to affect this
+        flywheelTalon.reverseSensor(!side.reverse);
 
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
+
+//        SmartDashboard.putNumber(this.getName() + "P", 0);
+//        SmartDashboard.putNumber(this.getName() + "I", 0);
+//        SmartDashboard.putNumber(this.getName() + "D", 0);
+//        SmartDashboard.putNumber(this.getName() + "F", 0);
     }
 
     // #######
@@ -53,10 +58,19 @@ public class Shooter extends Subsystem {
 
     public void getSmartDashboardPIDFvals() {
         flywheelTalon.setPID(
-                SmartDashboard.getNumber("ShootP", 0),
-                SmartDashboard.getNumber("ShootI", 0),
-                SmartDashboard.getNumber("ShootD", 0));
-        flywheelTalon.setF(SmartDashboard.getNumber("ShootF", 0));
+                SmartDashboard.getNumber(this.getName() + "P", 0),
+                SmartDashboard.getNumber(this.getName() + "I", 0),
+                SmartDashboard.getNumber(this.getName() + "D", 0));
+        flywheelTalon.setF(SmartDashboard.getNumber(this.getName() + "F", 0));
+    }
+
+    public void setPIDF(double p, double i, double d, double f) {
+        flywheelTalon.setPID(p, i, d);
+        flywheelTalon.setF(f);
+        SmartDashboard.putNumber(this.getName() + "P", p);
+        SmartDashboard.putNumber(this.getName() + "I", i);
+        SmartDashboard.putNumber(this.getName() + "D", d);
+        SmartDashboard.putNumber(this.getName() + "F", f);
     }
 
     public void setShooterTargetSpeed(double target) {
@@ -78,7 +92,7 @@ public class Shooter extends Subsystem {
     // #######
 
     public boolean readyToShoot() {
-        return Math.abs(getClosedLoopError()) < RobotMap.SHOOTING_SPEED_TOLERANCE;
+        return Math.abs(getClosedLoopError()) < SmartDashboard.getNumber("shooterTolerance", 0) * 1024;//RobotMap.SHOOTING_SPEED_TOLERANCE;
     }
 
     public double getSpeed() {
@@ -91,6 +105,10 @@ public class Shooter extends Subsystem {
 
     public double getClosedLoopError() {
         return flywheelTalon.getClosedLoopError();
+    }
+
+    public double getVoltageOutput() {
+        return flywheelTalon.getOutputVoltage();
     }
 
     public void initDefaultCommand() {

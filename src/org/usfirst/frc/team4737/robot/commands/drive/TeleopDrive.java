@@ -1,25 +1,25 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
  * @author brian
- * @version Feb. 14, 2017
+ * @version Feb. 13, 2017
  */
-public class MakeRobotPushable extends Command {
+public class TeleopDrive extends Command {
 
-    public MakeRobotPushable() {
+    public TeleopDrive() {
         requires(Robot.DRIVE);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.DRIVE.setBrakeMode(false);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        Robot.DRIVE.dumbDrive(-Robot.OI.controller.LS.X.get(), Robot.OI.controller.RT.get() - Robot.OI.controller.LT.get(), true);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -29,13 +29,11 @@ public class MakeRobotPushable extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.DRIVE.setBrakeMode(true);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
     }
 
 }

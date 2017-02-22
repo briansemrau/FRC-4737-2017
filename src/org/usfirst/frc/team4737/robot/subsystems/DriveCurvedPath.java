@@ -1,27 +1,32 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.*;
 
 /**
  * @author brian
- * @version Feb. 13, 2017
+ * @version Feb. 21, 2017
  */
-public class RustleJimmies extends Command {
+public class DriveCurvedPath extends Command {
 
-    public RustleJimmies() {
-        requires(Robot.AGITATOR);
+    private double distance;
+    private double angle;
+
+    public DriveCurvedPath(double distance, double angle) {
+        requires(Robot.DRIVE);
+        this.distance = distance;
+        this.angle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        Robot.DRIVE.setDistSetpoint(
+                distance - 2.0 * Math.PI / 360.0 * angle * RobotMap.WHEELBASE / 2.0,
+                distance + 2.0 * Math.PI / 360.0 * angle * RobotMap.WHEELBASE / 2.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//        if (((int) timeSinceInitialized()) % 2 == 0) { // TODO
-//            Robot.AGITATOR.setSpeeds();
-//        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -31,6 +36,7 @@ public class RustleJimmies extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+        Robot.DRIVE.dumbDrive(0, 0, false);
     }
 
     // Called when another command which requires one or more of the same

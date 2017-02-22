@@ -34,9 +34,8 @@ public class RobotMap {
 
     public static final double SHOOTING_SPEED = 3000 /*RPM*/ * 1024 /*Encoder ticks per rev*/; // TODO find value
     public static final double SHOOTING_SPEED_TOLERANCE = 150;
-    public static final double INTAKE_VOLTAGE = 10; // TODO figure out what speed
+    public static final double INTAKE_VOLTAGE = 10;
     public static final double AGITATOR_FEED_SPEED = 1;
-    public static final double AGITATOR_RUSTLE_SPEED = 0.5;
     public static final double FEEDER_FEED_VOLTAGE = 12;
 
     // ############################
@@ -59,10 +58,10 @@ public class RobotMap {
     public static final int DRIVE_RF_TALON = 16;
     public static final int DRIVE_RR_TALON = 17;
 
-    public static final int DRIVE_ENC_L_A = -1;
-    public static final int DRIVE_ENC_L_B = -1;
-    public static final int DRIVE_ENC_R_A = -1;
-    public static final int DRIVE_ENC_R_B = -1;
+    public static final int DRIVE_ENC_L_A = 0;
+    public static final int DRIVE_ENC_L_B = 1;
+    public static final int DRIVE_ENC_R_A = 8;
+    public static final int DRIVE_ENC_R_B = 9;
     public static final boolean DRIVE_ENC_L_REV = true; // TODO test
     public static final boolean DRIVE_ENC_R_REV = false;
     public static final double DRIVE_ENC_DIST_PER_PULSE = Math.PI * WHEEL_DIAM / 360; // 360 pps
@@ -75,6 +74,6 @@ public class RobotMap {
 
     // Jetson Subsystem
 
-    public static final int JETSON_POWER_DIO = 0;
+    public static final int JETSON_POWER_DIO = 2;
 
 }
