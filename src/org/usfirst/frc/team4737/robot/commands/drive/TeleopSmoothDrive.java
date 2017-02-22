@@ -2,11 +2,10 @@ package org.usfirst.frc.team4737.robot.commands.drive;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 13, 2017
  */
 public class TeleopSmoothDrive extends Command {

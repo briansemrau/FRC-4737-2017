@@ -1,16 +1,16 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
- * @author brian
- * @version Feb. 13, 2017
+ * @version Feb. 17, 2017
  */
-public class StopAgitator extends Command {
+public class ReverseClimber extends Command {
 
-    public StopAgitator() {
-        requires(Robot.AGITATOR);
+    public ReverseClimber() {
+        super(0.5);
+        requires(Robot.CLIMBER);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class StopAgitator extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.AGITATOR.stop();
+        Robot.CLIMBER.setSpeed(-0.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

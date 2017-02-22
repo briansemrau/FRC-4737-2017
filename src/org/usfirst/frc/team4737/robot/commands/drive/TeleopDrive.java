@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 13, 2017
  */
 public class TeleopDrive extends Command {

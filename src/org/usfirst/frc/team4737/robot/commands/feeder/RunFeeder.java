@@ -1,16 +1,20 @@
-package org.usfirst.frc.team4737.robot.subsystems;
+package org.usfirst.frc.team4737.robot.commands.feeder;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.*;
+import org.usfirst.frc.team4737.robot.RobotMap;
+import org.usfirst.frc.team4737.robot.subsystems.Feeder;
 
 /**
- * @author brian
- * @version Feb. 13, 2017
+ * @author Brian Semrau
+ * @version Feb. 14, 2017
  */
-public class RunIntake extends Command {
+public class RunFeeder extends Command {
 
-    public RunIntake() {
-        requires(Robot.INTAKE);
+    private Feeder feeder;
+
+    public RunFeeder(Feeder feeder) {
+        requires(feeder);
+        this.feeder = feeder;
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +23,7 @@ public class RunIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.INTAKE.setVoltage(RobotMap.INTAKE_VOLTAGE);
+        feeder.setFeedVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
     }
 
     // Make this return true when this Command no longer needs to run execute()

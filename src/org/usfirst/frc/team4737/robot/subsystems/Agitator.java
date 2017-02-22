@@ -2,39 +2,38 @@ package org.usfirst.frc.team4737.robot.subsystems;
 
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.usfirst.frc.team4737.robot.RobotMap;
-import org.usfirst.frc.team4737.robot.commands.StopAgitator;
+import org.usfirst.frc.team4737.robot.*;
+import org.usfirst.frc.team4737.robot.commands.agitator.StopAgitator;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 13, 2017
  */
 public class Agitator extends Subsystem {
 
-    private CANTalon leftTalon;
-    private CANTalon rightTalon;
+    private CANTalon winMotTalon;
 
-    public Agitator() {
-        leftTalon = new CANTalon(RobotMap.AGITATOR_L_TALON);
-        rightTalon = new CANTalon(RobotMap.AGITATOR_R_TALON);
-        leftTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-        rightTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-        leftTalon.setInverted(true);
-        rightTalon.setInverted(true);
+    public Agitator(Robot.Side side) {
+        super("Agitator" + side.name);
+
+        side.agitator = this;
+
+        winMotTalon = new CANTalon(RobotMap.AGITATOR_L_TALON);
+        winMotTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+
+        winMotTalon.setInverted(true); // Inverted no matter the side because of wiring
     }
 
     public void stop() {
-        leftTalon.set(0);
-        rightTalon.set(0);
+        winMotTalon.set(0);
     }
 
-    public void setSpeeds(double left, double right) {
-        leftTalon.set(left);
-        rightTalon.set(right);
+    public void setSpeed(double speed) {
+        winMotTalon.set(speed);
     }
 
     public void initDefaultCommand() {
-        setDefaultCommand(new StopAgitator());
+        setDefaultCommand(new StopAgitator(this));
     }
 
 }

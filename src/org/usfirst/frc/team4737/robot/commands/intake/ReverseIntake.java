@@ -1,15 +1,15 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.*;
 
 /**
- * @author brian
- * @version Feb. 13, 2017
+ * @author Brian Semrau
+ * @version Feb. 20, 2017
  */
-public class StopIntake extends Command {
+public class ReverseIntake extends Command {
 
-    public StopIntake() {
+    public ReverseIntake() {
         requires(Robot.INTAKE);
     }
 
@@ -19,7 +19,7 @@ public class StopIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.INTAKE.setVoltage(0);
+        Robot.INTAKE.setVoltage(-RobotMap.INTAKE_VOLTAGE);
     }
 
     // Make this return true when this Command no longer needs to run execute()

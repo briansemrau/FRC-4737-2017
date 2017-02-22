@@ -3,7 +3,7 @@ package org.usfirst.frc.team4737.lib;
 import edu.wpi.first.wpilibj.command.*;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 15, 2017
  */
 public class ParallelCommandGroup extends CommandGroup {

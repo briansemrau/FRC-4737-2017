@@ -1,16 +1,16 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.*;
 
 /**
- * @author brian
- * @version Feb. 15, 2017
+ * @author Brian Semrau
+ * @version Feb. 13, 2017
  */
-public class ClimberFullspeed extends Command {
+public class RunIntake extends Command {
 
-    public ClimberFullspeed() {
-        requires(Robot.CLIMBER);
+    public RunIntake() {
+        requires(Robot.INTAKE);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +19,7 @@ public class ClimberFullspeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.CLIMBER.setSpeed(1);
+        Robot.INTAKE.setVoltage(RobotMap.INTAKE_VOLTAGE);
     }
 
     // Make this return true when this Command no longer needs to run execute()

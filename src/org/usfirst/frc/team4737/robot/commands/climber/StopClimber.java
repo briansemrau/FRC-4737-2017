@@ -1,20 +1,16 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.*;
-import org.usfirst.frc.team4737.robot.subsystems.Feeder;
+import org.usfirst.frc.team4737.robot.Robot;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 14, 2017
  */
-public class RunFeeder extends Command {
+public class StopClimber extends Command {
 
-    private Feeder feeder;
-
-    public RunFeeder(Feeder feeder) {
-        requires(feeder);
-        this.feeder = feeder;
+    public StopClimber() {
+        requires(Robot.CLIMBER);
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +19,7 @@ public class RunFeeder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        feeder.setFeedVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
+        Robot.CLIMBER.setSpeed(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

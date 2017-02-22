@@ -1,16 +1,20 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.agitator;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.*;
+import org.usfirst.frc.team4737.robot.RobotMap;
+import org.usfirst.frc.team4737.robot.subsystems.Agitator;
 
 /**
- * @author brian
- * @version Feb. 13, 2017
+ * @author Brian Semrau
+ * @version Feb. 15, 2017
  */
-public class AgitateHopper extends Command {
+public class ReverseAgitator extends Command {
 
-    public AgitateHopper() {
-        requires(Robot.AGITATOR);
+    private Agitator agitator;
+
+    public ReverseAgitator(Agitator agitator) {
+        requires(agitator);
+        this.agitator = agitator;
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +23,7 @@ public class AgitateHopper extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.AGITATOR.setSpeeds(RobotMap.AGITATOR_FEED_SPEED, RobotMap.AGITATOR_FEED_SPEED);
+        agitator.setSpeed(-RobotMap.AGITATOR_FEED_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

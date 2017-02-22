@@ -7,8 +7,7 @@
 
 package org.usfirst.frc.team4737.lib;
 
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.hal.FRCNetComm.*;
 import edu.wpi.first.wpilibj.hal.HAL;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -69,17 +68,17 @@ public class FasterIterativeRobot extends RobotBase {
 
         // loop forever, calling the appropriate mode-dependent function
         LiveWindow.setEnabled(false);
-        
+
         double lastTime = Timer.getFPGATimestamp();
         while (true) {
             // Wait for new data to arrive
 //            m_ds.waitForData();
-        	
-        	double currentTime = Timer.getFPGATimestamp();
-        	double delta = currentTime - lastTime;
-        	if (delta < 0.005) continue;
-        	lastTime = currentTime;
-        	
+
+            double currentTime = Timer.getFPGATimestamp();
+            double delta = currentTime - lastTime;
+            if (delta < 0.005) continue;
+            lastTime = currentTime;
+
             // Call the appropriate function depending upon the current robot mode
             if (isDisabled()) {
                 // call DisabledInit() if we are now just entering disabled mode from

@@ -1,10 +1,10 @@
 
 package org.usfirst.frc.team4737.robot;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.lib.FasterIterativeRobot;
 import org.usfirst.frc.team4737.robot.commands.ActivateJetson;
 import org.usfirst.frc.team4737.robot.commands.drive.MakeRobotPushable;
@@ -21,18 +21,37 @@ public class Robot extends FasterIterativeRobot {
 
     public static OI OI;
 
+    public enum Side {
+        LEFT(RobotMap.SHOOTER_L_TALON, RobotMap.FEEDER_L_TALON, RobotMap.AGITATOR_L_TALON, false, "L"),
+        RIGHT(RobotMap.SHOOTER_R_TALON, RobotMap.FEEDER_R_TALON, RobotMap.AGITATOR_R_TALON, true, "R");
+
+        public final int flywheelID, feederID, agitatorID;
+        public final boolean reverse;
+        public final String name;
+        public Shooter shooter;
+        public Feeder feeder;
+        public Agitator agitator;
+
+        Side(int flywheelID, int feederID, int agitatorID, boolean reverse, String name) {
+            this.flywheelID = flywheelID;
+            this.feederID = feederID;
+            this.agitatorID = agitatorID;
+            this.reverse = reverse;
+            this.name = name;
+        }
+    }
+
     public static final Drive DRIVE = new Drive();
     public static final Intake INTAKE = new Intake();
-    public static final Agitator AGITATOR = new Agitator();
-    public static final Shooter SHOOTER_L = new Shooter(Shooter.Side.LEFT);
-    public static final Shooter SHOOTER_R = new Shooter(Shooter.Side.RIGHT);
-    public static final Feeder FEEDER_L = new Feeder(Shooter.Side.LEFT);
-    public static final Feeder FEEDER_R = new Feeder(Shooter.Side.RIGHT);
+    public static final Agitator AGITATOR_L = new Agitator(Side.LEFT);
+    public static final Agitator AGITATOR_R = new Agitator(Side.RIGHT);
+    public static final Shooter SHOOTER_L = new Shooter(Side.LEFT);
+    public static final Shooter SHOOTER_R = new Shooter(Side.RIGHT);
+    public static final Feeder FEEDER_L = new Feeder(Side.LEFT);
+    public static final Feeder FEEDER_R = new Feeder(Side.RIGHT);
     public static final Climber CLIMBER = new Climber();
 
     public static final JetsonTX1 JETSON_TX1 = new JetsonTX1();
-
-    public static final PowerDistributionPanel PDP = new PowerDistributionPanel();
 
 //    Command autonomousCommand;
 //    SendableChooser chooser;
@@ -144,8 +163,6 @@ public class Robot extends FasterIterativeRobot {
         // this line or comment it out.
 
 //        if (autonomousCommand != null) autonomousCommand.cancel();
-
-//        SmartDashboard.putString("currents", "0:1:2:3:4:5:6:7:8:9:10:11:12:13:14:15");
     }
 
     /**

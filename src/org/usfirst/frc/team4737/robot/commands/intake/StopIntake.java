@@ -1,17 +1,16 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
- * @author brian
- * @version Feb. 17, 2017
+ * @author Brian Semrau
+ * @version Feb. 13, 2017
  */
-public class ReverseClimber extends Command {
+public class StopIntake extends Command {
 
-    public ReverseClimber() {
-        super(0.5);
-        requires(Robot.CLIMBER);
+    public StopIntake() {
+        requires(Robot.INTAKE);
     }
 
     // Called just before this Command runs the first time
@@ -20,7 +19,7 @@ public class ReverseClimber extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.CLIMBER.setSpeed(-0.5);
+        Robot.INTAKE.setVoltage(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

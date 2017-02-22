@@ -10,7 +10,7 @@ import org.usfirst.frc.team4737.robot.commands.drive.TeleopDrive;
 import static org.usfirst.frc.team4737.robot.RobotMap.*;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 13, 2017
  */
 public class Drive extends Subsystem {

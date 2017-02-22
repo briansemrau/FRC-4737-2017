@@ -3,36 +3,20 @@ package org.usfirst.frc.team4737.robot.subsystems;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team4737.robot.RobotMap;
-import org.usfirst.frc.team4737.robot.commands.StopShooter;
+import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.commands.shooter.StopShooter;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 10, 2017
  */
 public class Shooter extends Subsystem {
 
-    public enum Side {
-        LEFT(RobotMap.SHOOTER_L_TALON, RobotMap.FEEDER_L_TALON, false),
-        RIGHT(RobotMap.SHOOTER_R_TALON, RobotMap.FEEDER_R_TALON, true);
-
-        public final int flywheelID;
-        public final int feederID;
-        public final boolean reverse;
-        public Shooter shooter;
-        public Feeder feeder;
-
-        Side(int flywheelID, int feederID, boolean reverse) {
-            this.flywheelID = flywheelID;
-            this.feederID = feederID;
-            this.reverse = reverse;
-        }
-    }
-
     private CANTalon flywheelTalon;
 
-    public Shooter(Side side) {
-        super("Shooter" + (side.reverse ? "R" : "L"));
+    public Shooter(Robot.Side side) {
+        super("Shooter" + side.name);
+
         side.shooter = this;
 
         flywheelTalon = new CANTalon(side.flywheelID);
@@ -45,11 +29,6 @@ public class Shooter extends Subsystem {
         flywheelTalon.reverseSensor(!side.reverse);
 
         flywheelTalon.changeControlMode(CANTalon.TalonControlMode.Speed);
-
-//        SmartDashboard.putNumber(this.getName() + "P", 0);
-//        SmartDashboard.putNumber(this.getName() + "I", 0);
-//        SmartDashboard.putNumber(this.getName() + "D", 0);
-//        SmartDashboard.putNumber(this.getName() + "F", 0);
     }
 
     // #######

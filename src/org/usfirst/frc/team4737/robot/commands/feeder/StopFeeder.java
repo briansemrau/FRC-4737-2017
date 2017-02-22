@@ -1,20 +1,19 @@
-package org.usfirst.frc.team4737.robot.commands;
+package org.usfirst.frc.team4737.robot.commands.feeder;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.*;
-import org.usfirst.frc.team4737.robot.subsystems.*;
+import org.usfirst.frc.team4737.robot.subsystems.Feeder;
 
 /**
- * @author brian
- * @version Feb. 15, 2017
+ * @author Brian Semrau
+ * @version Feb. 14, 2017
  */
-public class SmartFeedBalls extends Command {
+public class StopFeeder extends Command {
 
-    private Shooter.Side side;
+    private Feeder feeder;
 
-    public SmartFeedBalls(Shooter.Side side) {
-        requires(side.feeder);
-        this.side = side;
+    public StopFeeder(Feeder feeder) {
+        requires(feeder);
+        this.feeder = feeder;
     }
 
     // Called just before this Command runs the first time
@@ -23,9 +22,7 @@ public class SmartFeedBalls extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (side.shooter.readyToShoot()) {
-            side.feeder.setFeedVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
-        }
+        feeder.setFeedVoltage(0);
     }
 
     // Make this return true when this Command no longer needs to run execute()

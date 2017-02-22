@@ -1,11 +1,11 @@
-package org.usfirst.frc.team4737.robot.commands.tuning;
+package org.usfirst.frc.team4737.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.robot.subsystems.Shooter;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 21, 2017
  */
 public class BinarySearchFFTuner extends Command {
@@ -14,6 +14,7 @@ public class BinarySearchFFTuner extends Command {
 
     public BinarySearchFFTuner(Shooter shooter) {
         super("FFTuner " + shooter.getName());
+
         this.shooter = shooter;
         requires(shooter);
     }

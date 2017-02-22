@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import org.usfirst.frc.team4737.robot.RobotMap;
 
 /**
- * @author brian
+ * @author Brian Semrau
  * @version Feb. 13, 2017
  */
 public class JetsonTX1 extends Subsystem {
@@ -14,6 +14,7 @@ public class JetsonTX1 extends Subsystem {
     private DigitalOutput powerSwitch;
 
     public JetsonTX1() {
+        super("JetsonTX1");
         powerSwitch = new DigitalOutput(RobotMap.JETSON_POWER_DIO);
     }
 
