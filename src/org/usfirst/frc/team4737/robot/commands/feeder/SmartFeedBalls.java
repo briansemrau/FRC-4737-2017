@@ -23,7 +23,7 @@ public class SmartFeedBalls extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (side.shooter.readyToShoot()) {
-            side.feeder.setFeedVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
+            side.feeder.setVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
         }
     }
 

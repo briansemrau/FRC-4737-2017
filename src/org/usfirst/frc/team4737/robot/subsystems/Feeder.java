@@ -24,8 +24,12 @@ public class Feeder extends Subsystem {
         feederTalon.setInverted(side.reverse);
     }
 
-    public void setFeedVoltage(double voltage) {
+    public void setVoltage(double voltage) {
         feederTalon.set(voltage);
+    }
+
+    public void stop() {
+        setVoltage(0);
     }
 
     public void initDefaultCommand() {

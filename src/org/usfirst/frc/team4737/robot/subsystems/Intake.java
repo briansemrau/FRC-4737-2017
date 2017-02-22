@@ -25,6 +25,10 @@ public class Intake extends Subsystem {
         talon.set(voltage);
     }
 
+    public void stop() {
+        setVoltage(0);
+    }
+
     public void initDefaultCommand() {
         setDefaultCommand(new StopIntake());
     }

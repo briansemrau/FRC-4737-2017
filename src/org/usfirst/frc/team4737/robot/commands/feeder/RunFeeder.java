@@ -23,7 +23,7 @@ public class RunFeeder extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        feeder.setFeedVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
+        feeder.setVoltage(RobotMap.FEEDER_FEED_VOLTAGE);
     }
 
     // Make this return true when this Command no longer needs to run execute()

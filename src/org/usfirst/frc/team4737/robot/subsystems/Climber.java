@@ -30,14 +30,18 @@ public class Climber extends Subsystem {
         climberTalon.set(speed);
     }
 
-    public void setVoltage(double voltage) {
-        if (DriverStation.getInstance().isFMSAttached())
-            if (voltage < 0) {
-                voltage = 0;
-                System.out.println("WARNING: Something is trying to reverse the climber. Climber voltage set to 0.");
-            }
-        climberTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
-        climberTalon.set(voltage);
+//    public void setVoltage(double voltage) {
+//        if (DriverStation.getInstance().isFMSAttached())
+//            if (voltage < 0) {
+//                voltage = 0;
+//                System.out.println("WARNING: Something is trying to reverse the climber. Climber voltage set to 0.");
+//            }
+//        climberTalon.changeControlMode(CANTalon.TalonControlMode.Voltage);
+//        climberTalon.set(voltage);
+//    }
+
+    public void stop() {
+        setSpeed(0);
     }
 
     public void initDefaultCommand() {
