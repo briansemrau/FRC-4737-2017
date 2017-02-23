@@ -18,6 +18,8 @@ public class StopShooter extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        // Reset the closed loop target value
+        shooter.setShooterTargetSpeed(0);
     }
 
     // Called repeatedly when this Command is scheduled to run

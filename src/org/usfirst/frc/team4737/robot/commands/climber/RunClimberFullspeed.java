@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4737.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.*;
 
 /**
  * @author Brian Semrau
@@ -19,7 +19,7 @@ public class RunClimberFullspeed extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.CLIMBER.setSpeed(1);
+        Robot.CLIMBER.setSpeed(RobotMap.CLIMBER_FULLSPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

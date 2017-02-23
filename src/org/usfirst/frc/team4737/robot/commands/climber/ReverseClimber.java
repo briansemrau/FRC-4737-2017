@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4737.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.*;
 
 /**
  * @author Brian Semrau
@@ -20,7 +20,7 @@ public class ReverseClimber extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.CLIMBER.setSpeed(-0.5);
+        Robot.CLIMBER.setSpeed(RobotMap.CLIMBER_REVERSE_SPEED);
     }
 
     // Make this return true when this Command no longer needs to run execute()

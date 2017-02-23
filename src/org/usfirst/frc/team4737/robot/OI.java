@@ -6,7 +6,7 @@ import org.usfirst.frc.team4737.robot.commands.agitator.*;
 import org.usfirst.frc.team4737.robot.commands.climber.*;
 import org.usfirst.frc.team4737.robot.commands.drive.TeleopDrive;
 import org.usfirst.frc.team4737.robot.commands.feeder.*;
-import org.usfirst.frc.team4737.robot.commands.group.SingleShoot;
+import org.usfirst.frc.team4737.robot.advancedcommands.SingleShoot;
 import org.usfirst.frc.team4737.robot.commands.intake.*;
 import org.usfirst.frc.team4737.robot.commands.shooter.*;
 import org.usfirst.frc.team4737.robot.triggers.JoystickAxisTrigger;

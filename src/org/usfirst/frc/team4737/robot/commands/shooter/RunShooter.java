@@ -25,7 +25,6 @@ public class RunShooter extends Command {
     protected void execute() {
 //        shooter.setShooterTargetSpeed(RobotMap.SHOOTING_SPEED);
         shooter.setShooterTargetSpeed(SmartDashboard.getNumber("shooterSpeed", 0) * 1024);
-//        shooter.setShooterVoltage(13);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +34,6 @@ public class RunShooter extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        shooter.setShooterTargetSpeed(0); // Reset the closed loop target value
     }
 
     // Called when another command which requires one or more of the same
