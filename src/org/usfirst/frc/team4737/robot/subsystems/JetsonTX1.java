@@ -2,6 +2,7 @@ package org.usfirst.frc.team4737.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team4737.robot.RobotMap;
 
 /**
@@ -10,12 +11,16 @@ import org.usfirst.frc.team4737.robot.RobotMap;
  */
 public class JetsonTX1 extends Subsystem {
 
-    // TODO add NetworkTable for comms
     private DigitalOutput powerSwitch;
+
+    private NetworkTable networkTable;
 
     public JetsonTX1() {
         super("JetsonTX1");
+
         powerSwitch = new DigitalOutput(RobotMap.JETSON_POWER_DIO);
+
+//        networkTable = NetworkTable.getTable("jetson");
     }
 
     public void setPowerSwitch(boolean active) {

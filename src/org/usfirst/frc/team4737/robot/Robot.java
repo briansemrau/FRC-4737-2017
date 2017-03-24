@@ -2,10 +2,11 @@
 package org.usfirst.frc.team4737.robot;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import org.usfirst.frc.team4737.lib.FasterIterativeRobot;
+import org.usfirst.frc.team4737.robot.advancedcommands.AutonDriveStraight;
 import org.usfirst.frc.team4737.robot.commands.ActivateJetson;
 import org.usfirst.frc.team4737.robot.commands.drive.MakeRobotPushable;
 import org.usfirst.frc.team4737.robot.subsystems.*;
@@ -50,25 +51,31 @@ public class Robot extends FasterIterativeRobot {
     public static final Feeder FEEDER_L = new Feeder(Side.LEFT);
     public static final Feeder FEEDER_R = new Feeder(Side.RIGHT);
     public static final Climber CLIMBER = new Climber();
+    public static final GearHolder GEAR_HOLDER = new GearHolder();
+
+    public static final CameraDisplay CAMERA_DISPLAY = new CameraDisplay();
 
     public static final JetsonTX1 JETSON_TX1 = new JetsonTX1();
 
-//    Command autonomousCommand;
-//    SendableChooser chooser;
+    private Command autonomousCommand;
+    private SendableChooser<Command> chooser;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
+        setUpdateRate(RobotMap.RIO_UPDATE_RATE_HZ);
+
         OI = new OI();
 
         Scheduler.getInstance().add(new ActivateJetson());
 
-//        chooser = new SendableChooser();
-//        chooser.addDefault("Default Auto", new ExampleCommand());
+        chooser = new SendableChooser<>();
+//        chooser.addDefault("Drive to Baseline", new AutonDriveStraight(5));
+        chooser.addDefault("Center Gear Peg", new AutonDriveStraight(-(77.0 / 12.0)));
 //        chooser.addObject("My Auto", new MyAutoCommand());
-//        SmartDashboard.putData("Auto mode", chooser);
+        SmartDashboard.putData("Auto mode", chooser);
     }
 
     private double lastSecond = Timer.getFPGATimestamp();
@@ -84,7 +91,12 @@ public class Robot extends FasterIterativeRobot {
             lastSecond = currentTime;
         }
 
+        SmartDashboard.putBoolean("detectingGear", GEAR_HOLDER.detectingGear());
+
 //        selectedShooter = shooterTuningChooser.getSelected();
+
+        SmartDashboard.putNumber("leftEnc", DRIVE.leftEnc.getDistance());
+        SmartDashboard.putNumber("rightEnc", DRIVE.rightEnc.getDistance());
 
         SHOOTER_L.getSmartDashboardPIDFvals();
 //        SmartDashboard.putString("shooterLClosedLoopError", "" +
@@ -143,10 +155,10 @@ public class Robot extends FasterIterativeRobot {
      * example) or additional comparisons to the switch structure below with additional strings & commands.
      */
     public void autonomousInit() {
-//        autonomousCommand = (Command) chooser.getSelected();
+        autonomousCommand = chooser.getSelected();
 
         // schedule the autonomous command (example)
-//        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand != null) autonomousCommand.start();
     }
 
     /**

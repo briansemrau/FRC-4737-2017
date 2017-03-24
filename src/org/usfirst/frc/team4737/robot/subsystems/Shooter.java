@@ -3,7 +3,7 @@ package org.usfirst.frc.team4737.robot.subsystems;
 import com.ctre.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team4737.robot.Robot;
+import org.usfirst.frc.team4737.robot.*;
 import org.usfirst.frc.team4737.robot.commands.shooter.StopShooter;
 
 /**
@@ -40,7 +40,7 @@ public class Shooter extends Subsystem {
                 SmartDashboard.getNumber(this.getName() + "P", 0),
                 SmartDashboard.getNumber(this.getName() + "I", 0),
                 SmartDashboard.getNumber(this.getName() + "D", 0));
-        flywheelTalon.setF(SmartDashboard.getNumber(this.getName() + "F", 0));
+        flywheelTalon.setF(SmartDashboard.getNumber(this.getName() + "F", RobotMap.SHOOTER_L_F)); // TODO identify side or get better config thing
     }
 
     public void setPIDF(double p, double i, double d, double f) {
@@ -71,7 +71,7 @@ public class Shooter extends Subsystem {
     // #######
 
     public boolean readyToShoot() {
-        return Math.abs(getClosedLoopError()) < SmartDashboard.getNumber("shooterTolerance", 0) * 1024;//RobotMap.SHOOTING_SPEED_TOLERANCE;
+        return Math.abs(getClosedLoopError()) < SmartDashboard.getNumber("shooterTolerance", RobotMap.SHOOTING_SPEED_TOLERANCE) * 1024;//RobotMap.SHOOTING_SPEED_TOLERANCE;
     }
 
     public double getSpeed() {

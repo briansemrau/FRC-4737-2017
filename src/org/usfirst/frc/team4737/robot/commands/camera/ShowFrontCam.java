@@ -1,28 +1,22 @@
-package org.usfirst.frc.team4737.robot.commands.drive;
+package org.usfirst.frc.team4737.robot.commands.camera;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team4737.robot.*;
+import org.usfirst.frc.team4737.robot.Robot;
 
 /**
  * @author Brian Semrau
- * @version Feb. 21, 2017
+ * @version Mar. 03, 2017
  */
-public class DriveCurvedPath extends Command {
+public class ShowFrontCam extends Command {
 
-    private double distance;
-    private double angle;
-
-    public DriveCurvedPath(double distance, double angle) {
-        requires(Robot.DRIVE);
-        this.distance = distance;
-        this.angle = angle;
+    public ShowFrontCam() {
+        requires(Robot.CAMERA_DISPLAY);
+        setRunWhenDisabled(true);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.DRIVE.setDistSetpoint(
-                distance - 2.0 * Math.PI / 360.0 * angle * RobotMap.WHEELBASE / 2.0,
-                distance + 2.0 * Math.PI / 360.0 * angle * RobotMap.WHEELBASE / 2.0);
+        Robot.CAMERA_DISPLAY.startFrontCam();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,7 +30,6 @@ public class DriveCurvedPath extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-        Robot.DRIVE.dumbDrive(0, 0, false);
     }
 
     // Called when another command which requires one or more of the same

@@ -18,7 +18,7 @@ public class Agitator extends Subsystem {
 
         side.agitator = this;
 
-        winMotTalon = new CANTalon(RobotMap.AGITATOR_L_TALON);
+        winMotTalon = new CANTalon(side.agitatorID);
         winMotTalon.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 
         winMotTalon.setInverted(true); // Inverted no matter the side because of wiring

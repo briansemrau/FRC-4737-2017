@@ -3,6 +3,7 @@ package org.usfirst.frc.team4737.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team4737.lib.XboxController;
 import org.usfirst.frc.team4737.robot.commands.agitator.*;
+import org.usfirst.frc.team4737.robot.commands.camera.SwitchCameraView;
 import org.usfirst.frc.team4737.robot.commands.climber.*;
 import org.usfirst.frc.team4737.robot.commands.drive.TeleopDrive;
 import org.usfirst.frc.team4737.robot.commands.feeder.*;
@@ -52,6 +53,9 @@ public class OI {
         // Climber
         controller.Y.whenPressed(new RunClimberFullspeed());
         controller.Y.whenReleased(new StopClimber());
+
+        // Cameras
+//        controller.A.whenPressed(new SwitchCameraView());
 
         // Drive
         drivingTrigger.whenActive(new TeleopDrive());

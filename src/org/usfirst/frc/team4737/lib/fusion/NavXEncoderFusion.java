@@ -199,6 +199,8 @@ public class NavXEncoderFusion {
             if (deltaEncDistR / deltaTime > ENCODER_SLIPDETECT_MAX_RATE) {
                 rightSlipping = true;
             } else rightSlipping = false;
+
+            timeNavXStopped = Timer.getFPGATimestamp();
         }
 
         //

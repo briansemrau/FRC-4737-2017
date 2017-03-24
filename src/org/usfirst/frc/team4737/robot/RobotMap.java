@@ -14,16 +14,17 @@ public class RobotMap {
 
     private static final double FEET_PER_METER = 3.280839895;
 
-    public static final double WHEELBASE = 29.425 / 12.0 / FEET_PER_METER;
-    public static final double WHEEL_DIAM = 4.0 / 12.0 / FEET_PER_METER;
+    public static final double WHEELBASE = (29.425 / 12.0);
+    public static final double WHEEL_DIAM = (4.0 / 12.0);
 
-    public static final double NAVX_DISPLACEMENT_DRIFT_PER_S = 1 / 15.0; // (1 meter / 15 seconds)
+    public static final double NAVX_DISPLACEMENT_DRIFT_PER_S = FEET_PER_METER / 15.0; // (1 meter / 15 seconds)
 
     // #####
     // Other
     // #####
 
     public static final int NAVX_UPDATE_RATE_HZ = 200;
+    public static final int RIO_UPDATE_RATE_HZ = 200;
 
     // ########################
     // Subsystem Configurations
@@ -33,8 +34,11 @@ public class RobotMap {
     public static final int SHOOTER_L_TALON = 10;
     public static final int SHOOTER_R_TALON = 20;
 
-    public static final double SHOOTING_SPEED = 3000 /*RPM*/ * 1024 /*Encoder ticks per rev*/; // TODO find value
+    public static final double SHOOTING_SPEED = 3000 /*RPM*/ /*1024*/ /*Encoder ticks per rev*/; // TODO find value
     public static final double SHOOTING_SPEED_TOLERANCE = 150;
+
+    public static final double SHOOTER_L_F = 0.035;
+    public static final double SHOOTER_R_F = 0.035;
 
     // Feeder
     public static final int FEEDER_L_TALON = 11;
@@ -60,7 +64,7 @@ public class RobotMap {
     public static final int DRIVE_ENC_R_B = 9;
     public static final boolean DRIVE_ENC_L_REV = true; // TODO test
     public static final boolean DRIVE_ENC_R_REV = false;
-    public static final double DRIVE_ENC_DIST_PER_PULSE = Math.PI * WHEEL_DIAM / 360; // 360 pps
+    public static final double DRIVE_ENC_DIST_PER_PULSE = Math.PI * WHEEL_DIAM / 360; // 360 ppr
 
     public static final double ENCODER_SLIPDETECT_MAX_RATE = 0.01 / 12.0;
 

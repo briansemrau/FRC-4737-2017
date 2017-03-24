@@ -63,7 +63,7 @@ public class BinarySearchFFTuner extends Command {
             case 1:
                 initialError = shooter.getClosedLoopError();
                 coefficient = 1;
-                n = 0;
+                n = -2;
                 state++;
             case 2:
                 output = Math.pow(2, n) * coefficient;

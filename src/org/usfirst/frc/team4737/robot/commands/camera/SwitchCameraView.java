@@ -1,32 +1,37 @@
-package org.usfirst.frc.team4737.robot.commands.drive;
+package org.usfirst.frc.team4737.robot.commands.camera;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.*;
 import org.usfirst.frc.team4737.robot.Robot;
 
 /**
  * @author Brian Semrau
- * @version Feb. 13, 2017
+ * @version Mar. 03, 2017
  */
-public class TeleopDrive extends Command {
+public class SwitchCameraView extends Command {
 
-    public TeleopDrive() {
-        requires(Robot.DRIVE);
+    private boolean finished = false;
+
+    public SwitchCameraView() {
+        requires(Robot.CAMERA_DISPLAY);
+        setRunWhenDisabled(true);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        Robot.DRIVE.setSmoothDrive(200);
-        Robot.DRIVE.setMaxOutput(1);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.DRIVE.arcadeDrive(Robot.OI.controller.RT.get() - Robot.OI.controller.LT.get(), -Robot.OI.controller.LS.X.get(), true);
+        if (Robot.CAMERA_DISPLAY.isShowingGearCam()) {
+            Scheduler.getInstance().add(new ShowFrontCam());
+        } else {
+            Scheduler.getInstance().add(new ShowGearCam());
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return finished;
     }
 
     // Called once after isFinished returns true

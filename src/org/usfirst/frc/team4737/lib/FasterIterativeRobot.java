@@ -40,6 +40,8 @@ public class FasterIterativeRobot extends RobotBase {
     private boolean m_teleopInitialized;
     private boolean m_testInitialized;
 
+    private double updateRate;
+
     /**
      * Constructor for RobotIterativeBase.
      * <p>
@@ -76,7 +78,7 @@ public class FasterIterativeRobot extends RobotBase {
 
             double currentTime = Timer.getFPGATimestamp();
             double delta = currentTime - lastTime;
-            if (delta < 0.005) continue;
+            if (delta < 1 / updateRate) continue;
             lastTime = currentTime;
 
             // Call the appropriate function depending upon the current robot mode
@@ -139,6 +141,10 @@ public class FasterIterativeRobot extends RobotBase {
             }
             robotPeriodic();
         }
+    }
+
+    protected void setUpdateRate(double updateRateHz) {
+        this.updateRate = updateRateHz;
     }
 
   /* ----------- Overridable initialization code ----------------- */
