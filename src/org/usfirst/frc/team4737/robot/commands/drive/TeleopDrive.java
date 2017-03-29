@@ -21,7 +21,19 @@ public class TeleopDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        Robot.DRIVE.arcadeDrive(Robot.OI.controller.RT.get() - Robot.OI.controller.LT.get(), -Robot.OI.controller.LS.X.get(), true);
+        boolean fineMovement = Robot.OI.controller.LB.get();
+
+        if (fineMovement) {
+            Robot.DRIVE.arcadeDrive(
+                    (Robot.OI.controller.RT.get() - Robot.OI.controller.LT.get()) * 0.5,
+                    -Robot.OI.controller.LS.X.get() * 0.5,
+                    true);
+        } else {
+            Robot.DRIVE.arcadeDrive(
+                    Robot.OI.controller.RT.get() - Robot.OI.controller.LT.get(),
+                    -Robot.OI.controller.LS.X.get(),
+                    true);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

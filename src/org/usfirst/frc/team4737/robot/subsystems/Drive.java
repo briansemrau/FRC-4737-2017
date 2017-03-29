@@ -68,7 +68,7 @@ public class Drive extends Subsystem {
         dumbDrive = new RobotDrive(leftFront, rightFront);
 
         double distTolerance = 1.0 / 12.0;
-        leftDistControl = new PIDController(.35, 0, 0, 0, new PIDSource() {
+        leftDistControl = new PIDController(.45, 0, 0, 0, new PIDSource() {
             public void setPIDSourceType(PIDSourceType pidSource) {
             }
 
@@ -82,7 +82,7 @@ public class Drive extends Subsystem {
         }, this::updateLeftOutput);
         leftDistControl.setAbsoluteTolerance(distTolerance);
 
-        rightDistControl = new PIDController(.35, 0, 0, 0, new PIDSource() {
+        rightDistControl = new PIDController(.45, 0, 0, 0, new PIDSource() {
             public void setPIDSourceType(PIDSourceType pidSource) {
             }
 
@@ -196,9 +196,9 @@ public class Drive extends Subsystem {
     }
 
     public void setTargetDist(double distance) {
-//        leftDistControl.setSetpoint(distance);
+        leftDistControl.setSetpoint(distance);
         rightDistControl.setSetpoint(distance);
-//        leftDistControl.enable();
+        leftDistControl.enable();
         rightDistControl.enable();
     }
 
@@ -216,7 +216,7 @@ public class Drive extends Subsystem {
     }
 
     public void disableDistancePID() {
-//        leftDistControl.disable();
+        leftDistControl.disable();
         rightDistControl.disable();
     }
 

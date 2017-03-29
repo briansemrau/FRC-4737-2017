@@ -25,27 +25,27 @@ public class OI {
         JoystickAxisTrigger drivingTrigger = new JoystickAxisTrigger(controller.LS.X, controller.RT, controller.LT);
 
         SmartDashboard.putData(new ReverseClimber());
-        SmartDashboard.putData(new BinarySearchFFTuner(Robot.SHOOTER_L));
+//        SmartDashboard.putData(new BinarySearchFFTuner(Robot.SHOOTER_L));
         SmartDashboard.putData(new BinarySearchFFTuner(Robot.SHOOTER_R));
 
         // Shooters
-        controller.LB.whileActive(new RunShooter(Robot.SHOOTER_L));
+//        controller.LB.whileActive(new RunShooter(Robot.SHOOTER_L));
         controller.RB.whileActive(new RunShooter(Robot.SHOOTER_R));
 
         controller.START.whileActive(new SingleShoot(Robot.Side.RIGHT));
-        controller.SELECT.whileActive(new SingleShoot(Robot.Side.LEFT));
+//        controller.SELECT.whileActive(new SingleShoot(Robot.Side.LEFT));
 
         // Intake
         controller.X.whenPressed(new RunIntake());
         controller.X.whenReleased(new StopIntake());
 
         // Feeders and Agitator
-        controller.B.whenPressed(new RunFeeder(Robot.FEEDER_L));
+//        controller.B.whenPressed(new RunFeeder(Robot.FEEDER_L));
         controller.B.whenPressed(new RunFeeder(Robot.FEEDER_R));
         controller.B.whenPressed(new RunAgitator(Robot.AGITATOR_L));
         controller.B.whenPressed(new RunAgitator(Robot.AGITATOR_R));
 
-        controller.B.whenReleased(new StopFeeder(Robot.FEEDER_L));
+//        controller.B.whenReleased(new StopFeeder(Robot.FEEDER_L));
         controller.B.whenReleased(new StopFeeder(Robot.FEEDER_R));
         controller.B.whenReleased(new StopAgitator(Robot.AGITATOR_L));
         controller.B.whenReleased(new StopAgitator(Robot.AGITATOR_R));

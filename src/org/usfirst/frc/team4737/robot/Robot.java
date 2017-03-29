@@ -1,7 +1,7 @@
 
 package org.usfirst.frc.team4737.robot;
 
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.*;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.*;
@@ -69,13 +69,15 @@ public class Robot extends FasterIterativeRobot {
 
         OI = new OI();
 
-        Scheduler.getInstance().add(new ActivateJetson());
+//        Scheduler.getInstance().add(new ActivateJetson());
 
         chooser = new SendableChooser<>();
 //        chooser.addDefault("Drive to Baseline", new AutonDriveStraight(5));
         chooser.addDefault("Center Gear Peg", new AutonDriveStraight(-(77.0 / 12.0)));
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+
+//        CameraServer.getInstance().startAutomaticCapture("camera", "/dev/video0");
     }
 
     private double lastSecond = Timer.getFPGATimestamp();
@@ -95,7 +97,7 @@ public class Robot extends FasterIterativeRobot {
 
 //        selectedShooter = shooterTuningChooser.getSelected();
 
-        SmartDashboard.putNumber("leftEnc", DRIVE.leftEnc.getDistance());
+//        SmartDashboard.putNumber("leftEnc", DRIVE.leftEnc.getDistance());
         SmartDashboard.putNumber("rightEnc", DRIVE.rightEnc.getDistance());
 
         SHOOTER_L.getSmartDashboardPIDFvals();
